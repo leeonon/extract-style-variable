@@ -1,0 +1,29 @@
+:root {
+  --color-red: 'red';
+  --color-blue: 'blue';
+  --color-green: 'green';
+}
+
+body {
+  color: aqua;
+}
+
+#main {
+  border: 1px solid black;
+
+  --main-color: 'yellow';
+}
+
+.name,.age {
+  color: #8855ff;
+}
+
+ul li {
+  padding: 5px;
+  color:wheat;
+}
+
+:root {
+  --themeColor: #6622DD;
+  --aThemeColor: #8855ff;
+}
