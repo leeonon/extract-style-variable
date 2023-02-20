@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import postcss from 'postcss';
 
-type Result = Map<
+export type Result = Map<
 	string,
 	Array<{
 		prop: string;
@@ -15,22 +15,28 @@ type Result = Map<
 	}>
 >;
 
+export type GetStyleVarParams = {
+	path: string;
+};
+
 const src = path.resolve('./test/styles/index.css');
-const css = fs.readFileSync(src);
-const ast = postcss.parse(css);
-const result: Result = new Map();
+export function getStyleVar(params: GetStyleVarParams) {
+	const css = fs.readFileSync(params.path);
+	const ast = postcss.parse(css);
+	const result: Result = new Map();
 
-ast.walk((decl, index) => {
-	eachNodes(decl, result);
-});
+	ast.walk((decl) => {
+		eachNodes(decl, result);
+	});
+}
 
-console.log('🚀 ~ file: index.ts:12 ~ ast.walk ~ result', result);
+getStyleVar({ path: src });
 
 function eachNodes(node: ChildNode, result: Result) {
 	if (node.type === 'rule') {
 		node.nodes.forEach((child) => {
-			if (child.type === 'decl') {
-				const key = node.selectors.join('-');
+			if (child.type === 'decl' && checkProp(child.prop)) {
+				const key = node.selectors.join('>');
 				const value = { prop: child.prop, value: child.value };
 				result.set(
 					key,
@@ -40,4 +46,12 @@ function eachNodes(node: ChildNode, result: Result) {
 			}
 		});
 	}
+}
+
+function checkProp(prop: string) {
+	if (prop.substring(0, 2) === '--') {
+		return true;
+	}
+
+	return false;
 }

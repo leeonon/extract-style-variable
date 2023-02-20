@@ -6,6 +6,7 @@
 
 body {
   color: aqua;
+  --fontSize: 12px;
 }
 
 #main {
@@ -15,12 +16,12 @@ body {
 }
 
 .name,.age {
-  color: #8855ff;
+  --age-color: #8855ff;
 }
 
 ul li {
   padding: 5px;
-  color:wheat;
+  --li-color:wheat;
 }
 
 :root {
