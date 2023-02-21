@@ -28,6 +28,14 @@ module.exports = [
 		rules: {
 			...configPrettier.rules,
 			...pluginPrettier.configs.recommended.rules,
+			// prettier
+			'prettier/prettier': [
+				'warn',
+				// LF and CRLF
+				{
+					endOfLine: 'auto'
+				}
+			],
 			semi: 'error',
 			'no-unused-vars': 'warn',
 			'prefer-const': 'error'
