@@ -52,6 +52,5 @@ function checkProp(prop: string) {
 	if (prop.substring(0, 2) === '--') {
 		return true;
 	}
-
 	return false;
 }

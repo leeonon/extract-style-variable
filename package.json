@@ -4,10 +4,10 @@
   "description": "Extract variables from the style file, support css, less, scss",
   "main": "index.js",
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "lint": "eslint",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "vitest",
+    "test": "vitest run",
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "globals": "^13.20.0",
     "prettier": "^2.8.4",
-    "tsup": "^6.6.3"
+    "tsup": "^6.6.3",
+    "vitest": "^0.28.5"
   },
   "dependencies": {
     "@types/node": "^18.14.0",
