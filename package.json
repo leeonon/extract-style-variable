@@ -2,6 +2,7 @@
   "name": "extract-style-variable",
   "version": "0.0.0",
   "description": "Extract variables from the style file, support css, less, scss",
+  "private": false,
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
