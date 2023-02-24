@@ -2,13 +2,16 @@
   "name": "extract-style-variable",
   "version": "0.0.0",
   "description": "Extract variables from the style file, support css, less, scss",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "dev": "vitest",
     "test": "vitest run",
     "lint": "eslint",
-    "ci": "pnpm run lint && pnpm run test && pnpm run build"
+    "ci": "pnpm run lint && pnpm run test && pnpm run build",
+    "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
   },
   "homepage": "https://github.com/leeonon/extract-style-variable#readme",
   "devDependencies": {
+    "@changesets/cli": "^2.26.0",
     "@typescript-eslint/parser": "^5.52.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
