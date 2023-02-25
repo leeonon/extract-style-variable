@@ -10,35 +10,37 @@ const eslintConfigPrettier = require.resolve('eslint-config-prettier');
 const configPrettier = require(eslintConfigPrettier);
 
 module.exports = [
-	{
-		files: ['**/*.ts', '**/*.js'],
-		ignores: ['**/dist/**', '**/node_modules/**'],
-		languageOptions: {
-			parser: parserInstance,
-			globals: {
-				...globals.commonjs,
-				...globals.browser,
-				...globals.es2021,
-				...globals.node
-			}
-		},
-		plugins: {
-			prettier: pluginPrettier
-		},
-		rules: {
-			...configPrettier.rules,
-			...pluginPrettier.configs.recommended.rules,
-			// prettier
-			'prettier/prettier': [
-				'warn',
-				// LF and CRLF
-				{
-					endOfLine: 'auto'
-				}
-			],
-			semi: 'error',
-			'no-unused-vars': 'warn',
-			'prefer-const': 'error'
-		}
-	}
+  {
+    files: ['**/*.ts', '**/*.js'],
+    ignores: ['**/dist/**', '**/node_modules/**'],
+    languageOptions: {
+      parser: parserInstance,
+      globals: {
+        ...globals.commonjs,
+        ...globals.browser,
+        ...globals.es2021,
+        ...globals.node
+      }
+    },
+    plugins: {
+      prettier: pluginPrettier
+    },
+    rules: {
+      ...configPrettier.rules,
+      ...pluginPrettier.configs.recommended.rules,
+      // prettier
+      indent: ['error', 'space'],
+      'prettier/prettier': [2, { useTabs: false }],
+      'prettier/prettier': [
+        'warn',
+        // LF and CRLF
+        {
+          endOfLine: 'auto'
+        }
+      ],
+      semi: 'error',
+      'no-unused-vars': 'warn',
+      'prefer-const': 'error'
+    }
+  }
 ];

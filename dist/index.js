@@ -30,45 +30,48 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
-  getStyleVar: () => getStyleVar
+  getStyleVariable: () => getStyleVariable
 });
 module.exports = __toCommonJS(src_exports);
+
+// src/getStyleVariable.ts
 var import_node_fs = __toESM(require("fs"));
-var import_node_path = __toESM(require("path"));
 var import_postcss = __toESM(require("postcss"));
-var src = import_node_path.default.resolve("./test/styles/index.css");
-function getStyleVar(params) {
+function getStyleVariable(params) {
   const css = import_node_fs.default.readFileSync(params.path);
   const ast = import_postcss.default.parse(css);
-  const result = /* @__PURE__ */ new Map();
-  ast.walk((decl) => {
-    eachNodes(decl, result);
-  });
+  const result = [];
+  ast.walk((decl) => eachNodes(decl, result));
+  return Array.from(result).flat();
 }
-getStyleVar({ path: src });
 function eachNodes(node, result) {
   if (node.type === "rule") {
-    node.nodes.forEach((child) => {
-      var _a;
-      if (child.type === "decl" && checkProp(child.prop)) {
-        const key = node.selectors.join(">");
-        const value = { prop: child.prop, value: child.value };
-        result.set(
+    node.nodes.forEach((decl) => {
+      if (decl.type === "decl" && checkProp(decl.prop)) {
+        const key = node.selectors.concat(decl.prop).join("");
+        const comment = readAnnotation(decl);
+        result.push({
           key,
-          result.get(key) ? ((_a = result.get(key)) == null ? void 0 : _a.concat(value)) || [] : [value]
-        );
-        eachNodes(child, result);
+          prop: decl.prop,
+          value: decl.value,
+          comment
+        });
+        eachNodes(decl, result);
       }
     });
   }
 }
 function checkProp(prop) {
-  if (prop.substring(0, 2) === "--") {
-    return true;
+  return prop.startsWith("--");
+}
+function readAnnotation(decl) {
+  const annotation = decl.prev();
+  if ((annotation == null ? void 0 : annotation.type) === "comment") {
+    return annotation.text;
   }
-  return false;
+  return null;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  getStyleVar
+  getStyleVariable
 });

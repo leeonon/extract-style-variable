@@ -1,17 +1,22 @@
 :root {
+  /* --color-red */
   --color-red: 'red';
   --color-blue: 'blue';
   --color-green: 'green';
+  --nvaHeight: 20rem;
 }
 
 body {
   color: aqua;
+  /*body normal font size*/
   --fontSize: 12px;
 }
 
 #main {
   border: 1px solid black;
-
+  /*
+  * main color example
+  */
   --main-color: 'yellow';
 }
 

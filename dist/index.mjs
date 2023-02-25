@@ -1,39 +1,40 @@
-// src/index.ts
+// src/getStyleVariable.ts
 import fs from "fs";
-import path from "path";
 import postcss from "postcss";
-var src = path.resolve("./test/styles/index.css");
-function getStyleVar(params) {
+function getStyleVariable(params) {
   const css = fs.readFileSync(params.path);
   const ast = postcss.parse(css);
-  const result = /* @__PURE__ */ new Map();
-  ast.walk((decl) => {
-    eachNodes(decl, result);
-  });
+  const result = [];
+  ast.walk((decl) => eachNodes(decl, result));
+  return Array.from(result).flat();
 }
-getStyleVar({ path: src });
 function eachNodes(node, result) {
   if (node.type === "rule") {
-    node.nodes.forEach((child) => {
-      var _a;
-      if (child.type === "decl" && checkProp(child.prop)) {
-        const key = node.selectors.join(">");
-        const value = { prop: child.prop, value: child.value };
-        result.set(
+    node.nodes.forEach((decl) => {
+      if (decl.type === "decl" && checkProp(decl.prop)) {
+        const key = node.selectors.concat(decl.prop).join("");
+        const comment = readAnnotation(decl);
+        result.push({
           key,
-          result.get(key) ? ((_a = result.get(key)) == null ? void 0 : _a.concat(value)) || [] : [value]
-        );
-        eachNodes(child, result);
+          prop: decl.prop,
+          value: decl.value,
+          comment
+        });
+        eachNodes(decl, result);
       }
     });
   }
 }
 function checkProp(prop) {
-  if (prop.substring(0, 2) === "--") {
-    return true;
+  return prop.startsWith("--");
+}
+function readAnnotation(decl) {
+  const annotation = decl.prev();
+  if ((annotation == null ? void 0 : annotation.type) === "comment") {
+    return annotation.text;
   }
-  return false;
+  return null;
 }
 export {
-  getStyleVar
+  getStyleVariable
 };
