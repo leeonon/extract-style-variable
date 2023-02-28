@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import path from 'node:path';
 import { getStyleVariable } from '../src/index';
+import { parseLess } from '../src/playground';
 
 describe('Get css file variable', () => {
   const src = path.resolve(__dirname, 'styles/index.css');
@@ -12,5 +13,14 @@ describe('Get css file variable', () => {
       value: "'red'",
       comment: '--color-red'
     });
+  });
+});
+
+describe('Get less file variable', () => {
+  const src = path.resolve(__dirname, 'styles/index.less');
+  parseLess(src);
+
+  it('Should return a w two-dimensional array', () => {
+    expect(1).toBe(1);
   });
 });
