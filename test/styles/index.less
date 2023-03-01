@@ -1,7 +1,17 @@
+@theme: black;
+
 .class {
   @color: red;
 
   .sub {
     color: @color;
+    font-size: 12px;
+    background: unset;
+    @subColor: @theme;
+
+    .box {
+      @height: 100px;
+      margin: 0;
+    }
   }
 }

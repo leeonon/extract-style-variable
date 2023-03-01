@@ -8,6 +8,10 @@ declare module '*/parser' {
     emptyRule(): void;
     other(): void;
     rule(): void;
+    atrule(token: any): void;
+    init(node: any, line: any, column: any): void;
+    endFile(): void;
+    tokenizer: any;
   }
   export default Parser;
 }

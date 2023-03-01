@@ -7,6 +7,9 @@ export function parseLess(src: string) {
   postcss()
     .process(less, { syntax: parser })
     .then((res) => {
-      // console.log('🚀 ~ file: playground.ts:10 ~ postcss ~ res:', res);
+      console.log(
+        '🚀 ~ file: playground.ts:10 ~ postcss ~ res:',
+        JSON.stringify(res)
+      );
     });
 }

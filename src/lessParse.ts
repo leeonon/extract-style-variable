@@ -7,7 +7,6 @@ export default {
     const input = new Input(less);
     // @ts-ignore
     const parser = new LessParser(input);
-    // console.log('🚀 ~ file: lessParse.ts:15 ~ parse ~ parser:', parser);
     parser.parse();
 
     // @ts-ignore
