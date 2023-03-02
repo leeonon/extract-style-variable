@@ -2,6 +2,7 @@
 
 declare module '*/parser' {
   class Parser {
+    constructor(args: any): void;
     createTokenizer(): void;
     parse(): void;
     comment(token: any): void;
@@ -12,6 +13,7 @@ declare module '*/parser' {
     init(node: any, line: any, column: any): void;
     endFile(): void;
     tokenizer: any;
+    root: any;
   }
   export default Parser;
 }

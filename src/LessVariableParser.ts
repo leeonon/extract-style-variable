@@ -3,11 +3,11 @@ import Parser from 'postcss/lib/parser';
 
 const afterPattern = /:$/;
 
-export default class LessParser extends Parser {
+export default class LessVariableParser extends Parser {
   public lastNode: any;
 
-  constructor(...args: []) {
-    super(...args);
+  constructor(args: any) {
+    super(args);
 
     this.lastNode = null;
   }
@@ -39,10 +39,6 @@ export default class LessParser extends Parser {
     super.atrule(token);
 
     if (this.lastNode) {
-      console.log(
-        `🚀 ~  before lastNode: name: ${this.lastNode.name} ---- params: ${this.lastNode.params}`
-      );
-
       // TODO Handle import: name === 'import' && params.length
 
       if (this.lastNode.name.slice(-1) !== ':') {
@@ -73,10 +69,6 @@ export default class LessParser extends Parser {
         this.lastNode.value = this.lastNode.params;
         this.lastNode.variable = true;
       }
-
-      console.log(
-        `🚀 ~  after lastNode: name: ${this.lastNode.name} ---- params: ${this.lastNode.params} ---- value: ${this.lastNode.value}`
-      );
     }
   }
 }

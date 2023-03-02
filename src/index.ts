@@ -1,2 +1,2 @@
-export * from './getStyleVariable';
 export * from './types';
+export { variableParse } from './variableParse';
