@@ -7,9 +7,10 @@ import parser from './LessVariableParse';
 
 export default class StyleVariableParser {
   public css: string;
+  // public variableList: [];
 
-  constructor({ src }: { src: string }) {
-    this.css = fs.readFileSync(src, 'utf-8');
+  constructor(css: string) {
+    this.css = css;
   }
 
   async parseCss() {
@@ -25,7 +26,7 @@ export default class StyleVariableParser {
     const result = await postcss().process(this.css, { syntax: parser });
     console.log(
       '🚀 ~ file: StyleVariableParser.ts:23 ~ StyleVariableParser ~ parseLess ~ result:',
-      result
+      JSON.stringify(result.root)
     );
     return result;
   }

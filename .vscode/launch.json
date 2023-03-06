@@ -3,7 +3,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"runtimeArgs": ["run-script", "start"],
+			"runtimeArgs": ["run-script", "dev"],
 			"name": "Debugger",
 			"runtimeExecutable": "pnpm",
 			"skipFiles": ["<node_internals>/**", "node_modules/tslib/**"],

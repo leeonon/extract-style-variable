@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import StyleVariableParser from './StyleVariableParser';
 
 export type VariableParseParams = {
@@ -5,7 +6,8 @@ export type VariableParseParams = {
 };
 
 export function variableParse(params: VariableParseParams) {
-  const parser = new StyleVariableParser({ src: params.path });
+  const css = fs.readFileSync(params.path, 'utf-8');
+  const parser = new StyleVariableParser(css);
 
   return parser;
 }

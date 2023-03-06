@@ -8,8 +8,8 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
-    "start": "vitest",
-    "dev": "tsup src/index.ts --watch",
+    "watch": "tsup src/index.ts --watch",
+    "dev": "vitest",
     "test": "vitest run",
     "lint": "eslint",
     "ci": "pnpm run lint && pnpm run test && pnpm run build",

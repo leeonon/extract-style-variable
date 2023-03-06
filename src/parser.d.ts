@@ -7,13 +7,14 @@ declare module '*/parser' {
     parse(): void;
     comment(token: any): void;
     emptyRule(): void;
-    other(): void;
+    other(token: any): void;
     rule(): void;
     atrule(token: any): void;
     init(node: any, line: any, column: any): void;
     endFile(): void;
     tokenizer: any;
     root: any;
+    input: any;
   }
   export default Parser;
 }
