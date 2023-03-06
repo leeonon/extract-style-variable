@@ -1,11 +1,14 @@
+import type { VariableAtRule } from './types';
+
 import Comment from 'postcss/lib/comment';
 import Parser from 'postcss/lib/parser';
 
 const afterPattern = /:$/;
+const beforePattern = /^:(\s+)?/;
 
 export default class LessVariableParser extends Parser {
-  public lastNode: any;
-  private temporaryComments: any[];
+  public lastNode: VariableAtRule | null;
+  private temporaryComments: Comment[];
 
   constructor(args: any) {
     super(args);
@@ -29,10 +32,10 @@ export default class LessVariableParser extends Parser {
     }
 
     super.endFile();
+    this.getComments();
   }
 
-  // TODO 自定义 格式，不使用 super init
-  init(node: any, line: any, column: any) {
+  init(node: VariableAtRule, line: number, column: number) {
     super.init(node, line, column);
     this.lastNode = node;
   }
@@ -54,6 +57,7 @@ export default class LessVariableParser extends Parser {
 
       // Processing variable node
       if (afterPattern.test(this.lastNode.name)) {
+        // @ts-ignore
         const [match] = this.lastNode.name.match(afterPattern);
 
         this.lastNode.name = this.lastNode.name.replace(match, '');
@@ -62,8 +66,8 @@ export default class LessVariableParser extends Parser {
         this.lastNode.value = this.lastNode.params;
       }
 
-      if (/^:(\s+)?/.test(this.lastNode.params)) {
-        const [match] = this.lastNode.params.match(/^:(\s+)?/);
+      if (beforePattern.test(this.lastNode.params)) {
+        const [match] = this.lastNode.params.match(beforePattern);
         this.lastNode.value = this.lastNode.params.replace(match, '');
         this.lastNode.raws.afterName =
           (this.lastNode.raws.afterName || '') + match;
@@ -72,11 +76,9 @@ export default class LessVariableParser extends Parser {
       if (this.lastNode.params.startsWith('@')) {
         const parentValue = [...this.root.nodes]
           .reverse()
-          .find((item: any) => item.name === this.lastNode.params);
+          .find((item: any) => item.name === this.lastNode?.params);
         this.lastNode.value = parentValue?.value;
       }
-
-      this.getComments();
     }
   }
 
@@ -114,34 +116,25 @@ export default class LessVariableParser extends Parser {
   }
 
   getComments() {
-    if (this.temporaryComments.length > 0) {
-      const { start, end } = this.lastNode.source;
-      const comments: any = {
-        top: [],
-        right: []
-      };
+    if (this.temporaryComments.length === 0) return;
+
+    this.root.nodes.forEach((node) => {
+      node.comments = { top: [], right: [] };
 
       let currentIndex = 1;
-
       [...this.temporaryComments].reverse().forEach((comment) => {
-        if (comment.text === 'right comment') {
-          console.log(
-            '🚀 ~ file: LessVariableParser.ts:131 ~ LessVariableParser ~ this.temporaryComments.forEach ~ comment.source.end.line:',
-            comment.source,
-            this.lastNode.name
-          );
-        }
-        if (comment.source.start.line === end.line) {
-          comments.right.push(comment);
+        if (comment.source?.start?.line === node.source?.end?.line) {
+          node.comments.right.push(comment);
         }
 
-        if (comment.source.end.line === start.line - currentIndex) {
+        if (
+          comment.source?.end?.line ===
+          node.source?.start?.line - currentIndex
+        ) {
           currentIndex++;
-          comments.top.push(comment);
+          node.comments.top.push(comment);
         }
       });
-      this.lastNode.comments = comments;
-      this.temporaryComments = [];
-    }
+    });
   }
 }

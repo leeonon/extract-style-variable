@@ -13,8 +13,13 @@ declare module '*/parser' {
     init(node: any, line: any, column: any): void;
     endFile(): void;
     tokenizer: any;
-    root: any;
+    root: {
+      nodes: any[];
+    };
     input: any;
+    current: {
+      nodes: any[];
+    };
   }
   export default Parser;
 }
