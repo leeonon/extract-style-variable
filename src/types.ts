@@ -5,7 +5,11 @@ export type StyleVariableResult = Array<{
   selectors: string[];
   name: string;
   value: string;
-  comment?: string | null;
+  params: string;
+  comments?: {
+    top: Comment[];
+    right: Comment[];
+  };
 }>;
 
 export type GetStyleVarParams = {

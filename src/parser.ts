@@ -1,19 +1,24 @@
 import type { VariableAtRule } from './types';
 
-import Comment from 'postcss/lib/comment';
 import Parser from 'postcss/lib/parser';
+import Comment from 'postcss/lib/comment';
+import Input from 'postcss/lib/input';
 
 const afterPattern = /:$/;
 const beforePattern = /^:(\s+)?/;
 
-export default class LessVariableParser extends Parser {
+export type ParserType = 'css' | 'less' | 'sass';
+
+export default class VariableParser extends Parser {
   public lastNode: VariableAtRule | null;
   private temporaryComments: Comment[];
+  private type: ParserType;
 
-  constructor(args: any) {
-    super(args);
+  constructor(type: ParserType, input: Input) {
+    super(input);
 
     this.lastNode = null;
+    this.type = type;
     this.temporaryComments = [];
   }
 

@@ -1,8 +1,10 @@
 // https://github.com/postcss/postcss/blob/main/lib/parser.js#L79
 
-declare module '*/parser' {
+// import type { ChildNode, Declaration } from 'postcss';
+
+declare module 'postcss/lib/parser' {
   class Parser {
-    constructor(args: any): void;
+    constructor(input: any): void;
     createTokenizer(): void;
     parse(): void;
     comment(token: any): void;

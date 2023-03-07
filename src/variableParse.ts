@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import StyleVariableParser from './StyleVariableParser';
+import StyleVariableParser from './styleVariableParser';
 
 export type VariableParseParams = {
   path: string;
