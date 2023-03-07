@@ -4,6 +4,7 @@
   --color-blue: 'blue';
   --color-green: 'green';
   --nvaHeight: 20rem;
+  --nvaWidth: var(--nvaHeight + 20px);
 }
 
 body {

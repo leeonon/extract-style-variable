@@ -34,6 +34,10 @@ export default class VariableParser extends Parser {
       if (token[0] === 'comment') {
         this.comment(token);
       }
+
+      if (token[0] === 'word') {
+        this.word(token);
+      }
     }
 
     super.endFile();
@@ -43,6 +47,17 @@ export default class VariableParser extends Parser {
   init(node: VariableAtRule, line: number, column: number) {
     super.init(node, line, column);
     this.lastNode = node;
+  }
+
+  word(token: any[]) {
+    if (!token[1].startsWith('--')) return;
+    super.other(token);
+
+    if (this.lastNode) {
+      this.lastNode.name = this.lastNode.prop;
+      this.lastNode.params = this.lastNode.value;
+      this.lastNode.value = this.lastNode.value;
+    }
   }
 
   atrule(token: any) {

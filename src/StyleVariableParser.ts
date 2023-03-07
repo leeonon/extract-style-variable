@@ -26,12 +26,11 @@ export default class StyleVariableParser {
   }
 
   async parseCss() {
-    const ast = postcss.parse(this.css);
-    const result: StyleVariableResult = [];
-
-    ast.walk((decl) => this.eachCssNodes(decl, result));
-
-    return Array.from(result).flat();
+    const result = await postcss().process(this.css, {
+      syntax: createSyntax('css')
+    });
+    this.root = result.root;
+    return this.eachNodes(this.root.nodes as VariableAtRule[]);
   }
 
   async parseLess(): Promise<StyleVariableResult> {
@@ -62,26 +61,5 @@ export default class StyleVariableParser {
     return comments.map((comment) => ({
       text: comment.text
     }));
-  }
-
-  private eachCssNodes(node: ChildNode, result: StyleVariableResult) {
-    // if (node.type === 'rule') {
-    //   node.nodes.forEach((decl) => {
-    //     if (decl.type === 'decl' && decl.prop.startsWith('--')) {
-    //       const selectors = node.selectors.concat(decl.prop);
-    //       const annotation = decl.prev();
-    //       const comment =
-    //         annotation?.type === 'comment' ? annotation.text : null;
-    //       result.push({
-    //         selectors,
-    //         name: decl.prop,
-    //         value: decl.value,
-    //         params: ''
-    //         // comment
-    //       });
-    //       this.eachCssNodes(decl, result);
-    //     }
-    //   });
-    // }
   }
 }

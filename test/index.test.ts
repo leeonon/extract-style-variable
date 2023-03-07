@@ -3,25 +3,26 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { variableParse } from '../src/index';
 
-// describe('Get css file variable', () => {
-//   const src = path.resolve(__dirname, 'styles/index.css');
+describe('Get css file variable', () => {
+  const src = path.resolve(__dirname, 'styles/index.css');
 
-//   it('Should return a w two-dimensional array', async () => {
-//     const result = await variableParse({ path: src }).parseCss();
-//     expect(result[0]).toMatchObject({
-//       selectors: [':root', '--color-red'],
-//       name: '--color-red',
-//       value: "'red'",
-//       comment: 'var color'
-//     });
-//   });
-// });
+  it('Should return a w two-dimensional array', async () => {
+    const src = path.resolve(__dirname, 'styles/index.css');
+    const css = fs.readFileSync(src, 'utf-8');
+    const result = await variableParse(css).parseCss();
+    expect(result[0]).toMatchObject({
+      name: '--color-red',
+      value: "'red'",
+      params: "'red'",
+      comments: { top: [{ text: 'var color' }], right: [] }
+    });
+  });
+});
 
 describe('Get less file variable', async () => {
   const src = path.resolve(__dirname, 'styles/index.less');
   const css = fs.readFileSync(src, 'utf-8');
   const result = await variableParse(css).parseLess();
-  console.log('🚀 ~ file: index.test.ts:24 ~ describe ~ result:', result[1]);
 
   it('Should return a w two-dimensional array', () => {
     expect(result[0]).toMatchObject({
