@@ -2,13 +2,17 @@ import AtRule from 'postcss/lib/at-rule';
 import Comment from 'postcss/lib/comment';
 
 export type StyleVariableResult = Array<{
-  selectors: string[];
+  // selectors: string[];
   name: string;
   value: string;
   params: string;
-  comments?: {
-    top: Comment[];
-    right: Comment[];
+  comments: {
+    top: {
+      text: string;
+    }[];
+    right: {
+      text: string;
+    }[];
   };
 }>;
 

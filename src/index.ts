@@ -1,2 +1,2 @@
 export * from './types';
-export { variableParse } from './variableParse';
+export { parseVariable as variableParse } from './variableParse';

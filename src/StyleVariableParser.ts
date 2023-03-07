@@ -1,7 +1,17 @@
-import type { ChildNode, Declaration, Result, Root, Document } from 'postcss';
-import type { GetStyleVarParams, StyleVariableResult } from './types';
+import type {
+  ChildNode,
+  Declaration,
+  Result,
+  Root,
+  Document,
+  Comment
+} from 'postcss';
+import type {
+  GetStyleVarParams,
+  StyleVariableResult,
+  VariableAtRule
+} from './types';
 
-import fs from 'node:fs';
 import postcss from 'postcss';
 import createSyntax from './syntax';
 
@@ -24,37 +34,54 @@ export default class StyleVariableParser {
     return Array.from(result).flat();
   }
 
-  async parseLess() {
+  async parseLess(): Promise<StyleVariableResult> {
     const result = await postcss().process(this.css, {
       syntax: createSyntax('less')
     });
     this.root = result.root;
-    this.variableList = this.parseLessNodes(this.root);
-    return this;
+    return this.eachNodes(this.root.nodes as VariableAtRule[]);
+  }
+
+  eachNodes(nodes: VariableAtRule[]): StyleVariableResult {
+    return nodes.map((node: VariableAtRule) => {
+      return {
+        name: node.name,
+        value: node.value,
+        params: node.params,
+        comments: {
+          top: this.eachCommons(node.comments.top),
+          right: this.eachCommons(node.comments.right)
+        }
+      };
+    });
   }
 
   async parseSass() {}
 
-  private parseLessNodes(root: Root | Document) {}
+  eachCommons(comments: Comment[]) {
+    return comments.map((comment) => ({
+      text: comment.text
+    }));
+  }
 
   private eachCssNodes(node: ChildNode, result: StyleVariableResult) {
-    if (node.type === 'rule') {
-      node.nodes.forEach((decl) => {
-        if (decl.type === 'decl' && decl.prop.startsWith('--')) {
-          const selectors = node.selectors.concat(decl.prop);
-          const annotation = decl.prev();
-          const comment =
-            annotation?.type === 'comment' ? annotation.text : null;
-          result.push({
-            selectors,
-            name: decl.prop,
-            value: decl.value,
-            params: ''
-            // comment
-          });
-          this.eachCssNodes(decl, result);
-        }
-      });
-    }
+    // if (node.type === 'rule') {
+    //   node.nodes.forEach((decl) => {
+    //     if (decl.type === 'decl' && decl.prop.startsWith('--')) {
+    //       const selectors = node.selectors.concat(decl.prop);
+    //       const annotation = decl.prev();
+    //       const comment =
+    //         annotation?.type === 'comment' ? annotation.text : null;
+    //       result.push({
+    //         selectors,
+    //         name: decl.prop,
+    //         value: decl.value,
+    //         params: ''
+    //         // comment
+    //       });
+    //       this.eachCssNodes(decl, result);
+    //     }
+    //   });
+    // }
   }
 }
