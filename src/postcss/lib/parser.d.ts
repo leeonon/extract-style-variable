@@ -14,6 +14,7 @@ declare module 'postcss/lib/parser' {
     atrule(token: any): void;
     init(node: any, line: any, column: any): void;
     endFile(): void;
+    unknownWord(token: any): void;
     tokenizer: any;
     root: {
       nodes: any[];
@@ -22,6 +23,7 @@ declare module 'postcss/lib/parser' {
     current: {
       nodes: any[];
     };
+    spaces: string;
   }
   export default Parser;
 }

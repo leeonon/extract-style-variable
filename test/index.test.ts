@@ -33,7 +33,7 @@ describe('Get less file variable', async () => {
     });
   });
 
-  it('Comments', () => {
+  it('Less Comments', () => {
     expect(result[1]).toMatchObject({
       name: '@color',
       value: 'red',
@@ -46,6 +46,30 @@ describe('Get less file variable', async () => {
         ],
         right: [{ text: 'right comment' }]
       }
+    });
+  });
+});
+
+describe('Get sass file variable', async () => {
+  const src = path.resolve(__dirname, 'styles/index.scss');
+  const css = fs.readFileSync(src, 'utf-8');
+  const result = await variableParse(css).parseSass();
+
+  it('Should return a Object', () => {
+    expect(result[0]).toMatchObject({
+      name: '$color',
+      value: '#F90',
+      params: '#F90',
+      comments: { top: [{ text: 'Top Comment' }], right: [] }
+    });
+  });
+
+  it('Should return a Object', () => {
+    expect(result[2]).toMatchObject({
+      name: '$nav-color',
+      value: '#F90',
+      params: '$color',
+      comments: { top: [], right: [] }
     });
   });
 });
