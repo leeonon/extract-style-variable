@@ -1,9 +1,10 @@
 :root {
-  /* --color-red */
+  /* var color */
   --color-red: 'red';
   --color-blue: 'blue';
   --color-green: 'green';
   --nvaHeight: 20rem;
+  --nvaWidth: var(--nvaHeight + 20px);
 }
 
 body {

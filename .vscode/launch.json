@@ -1,0 +1,16 @@
+{
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"runtimeArgs": ["run-script", "dev"],
+			"name": "Debugger",
+			"runtimeExecutable": "pnpm",
+			"skipFiles": ["<node_internals>/**", "node_modules/tslib/**"],
+			"internalConsoleOptions": "openOnSessionStart",
+			"console": "internalConsole",
+			"outputCapture": "std",
+			"outFiles": ["${workspaceFolder}/dist/**/*.js"]
+		},
+	]
+}

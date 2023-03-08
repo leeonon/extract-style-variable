@@ -8,6 +8,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
+    "watch": "tsup src/index.ts --watch",
     "dev": "vitest",
     "test": "vitest run",
     "lint": "eslint",
@@ -42,8 +43,8 @@
   "dependencies": {
     "@types/node": "^18.14.0",
     "eslint": "^8.34.0",
-    "postcss": "^8.4.21",
     "postcss-css-variables": "^0.18.0",
+    "postcss": "^8.4.21",
     "typescript": "^4.9.5"
   }
 }

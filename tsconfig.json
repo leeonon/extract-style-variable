@@ -8,5 +8,5 @@
     "strict": true,                                      /* Enable all strict type-checking options. */
     "skipLibCheck": true,
     "noEmit": true
-  }
+  },
 }

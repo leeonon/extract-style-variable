@@ -1,0 +1,12 @@
+/* Top Comment */
+$color: #F90;
+nav {
+  $width: 100px;
+  width: $width;
+  color: $color;
+  $nav-color: $color;
+
+  .box {
+    $box-width: 50px; /* Right Comment */
+  }
+}

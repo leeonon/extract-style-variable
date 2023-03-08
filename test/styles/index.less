@@ -1,0 +1,26 @@
+@theme: green;
+.class {
+  /* color comment 1 */
+  /* color comment 2 */
+  /* color comment 3 */
+  @color: red; /* right comment */
+
+  .sub {
+    color: @color;
+    font-size: 12px;
+    background: unset;
+    /* 变量的块注释 */
+    @subColor: @theme;
+
+    /* class块注释 */
+    .box {
+      @height: 100px;
+      margin: 0;
+    }
+  }
+}
+
+body {
+  @bodyColor: black;
+  color: black;
+}
