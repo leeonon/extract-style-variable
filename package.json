@@ -1,6 +1,6 @@
 {
   "name": "extract-style-variable",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Extract variables from the style file, support css, less, scss",
   "private": false,
   "main": "./dist/index.js",
