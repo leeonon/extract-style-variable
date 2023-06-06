@@ -35,7 +35,8 @@ module.exports = [
         'warn',
         // LF and CRLF
         {
-          endOfLine: 'auto'
+          endOfLine: 'auto',
+          useTabs: false
         }
       ],
       semi: 'error',
