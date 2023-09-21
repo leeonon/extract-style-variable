@@ -21,9 +21,51 @@ const result = getStyleVariable({ path: src });
 console.log("result", result);
 ```
 
+Input:
+
+```ts
+:root {
+  /* --color-red */
+  --color-red: "red";
+  --color-blue: "blue";
+  --color-green: "green";
+  --nvaHeight: 20rem;
+}
+
+body {
+  color: aqua;
+  /*body normal font size*/
+  --fontSize: 12px;
+}
+
+#main {
+  border: 1px solid black;
+  /*
+  * main color example
+  */
+  --main-color: "yellow";
+}
+
+.name,
+.age {
+  --age-color: #8855ff;
+}
+
+ul li {
+  padding: 5px;
+  --li-color: wheat;
+}
+
+:root {
+  --themeColor: #6622dd;
+  --aThemeColor: #8855ff;
+}
+
+```
+
 Output Results:
 
-```json
+```ts
 [
   {
     key: ':root--color-red',
