@@ -23,7 +23,7 @@ console.log("result", result);
 
 Output Results:
 
-```ts
+```json
 [
   {
     key: ':root--color-red',
